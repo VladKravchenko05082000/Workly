@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@theme {
+  /* ─── COLORS ─────────────────────────────────────────────── */
+  --color-canvas: #0c0c0f; /* bg-canvas */
+  --color-surface: #13131a; /* bg-surface */
+  --color-surface2: #1a1a24; /* bg-surface2 */
+  --color-surface3: #22222f; /* bg-surface3 */
+
+  --color-primary: #7c6af7; /* bg-primary / text-primary */
+  --color-soft: #a78bfa; /* text-soft */
+  --color-glow: rgba(124, 106, 247, 0.25); /* used in shadows */
+
+  --color-base: #f0f0f5; /* text-base */
+  --color-subtle: #6b6b80; /* text-subtle */
+  --color-faint: #9090a8; /* text-faint */
+
+  --color-line: rgba(255, 255, 255, 0.07); /* border-line */
+
+  --color-success: #34d399; /* text-success / bg-success */
+  --color-danger: #f87171; /* text-danger / bg-danger */
+  --color-warning: #fbbf24; /* text-warning / bg-warning */
+
+  /* ─── FONTS ───────────────────────────────────────────────── */
+  --font-syne: "Syne", sans-serif; /* font-syne — headings, buttons, nav */
+  --font-dm: "DM Sans", sans-serif; /* font-dm — body, inputs, descriptions */
+
+  /* ─── FONT SIZES ──────────────────────────────────────────── */
+  --text-2xs: 10px; /* badges, labels */
+  --text-xs: 11px; /* captions, dates */
+  --text-sm: 12px; /* secondary text */
+  --text-base: 13px; /* default body */
+  --text-md: 14px; /* inputs, buttons */
+  --text-lg: 15px; /* large inputs */
+  --text-xl: 16px; /* logo, nav */
+  --text-2xl: 17px; /* section labels */
+  --text-3xl: 20px; /* page titles mobile */
+  --text-4xl: 22px; /* page titles desktop */
+  --text-5xl: 26px; /* auth title mobile */
+  --text-6xl: 28px; /* auth title desktop */
+
+  /* ─── LETTER SPACING ──────────────────────────────────────── */
+  --tracking-sm: 0.03em; /* note dates */
+  --tracking-md: 0.04em; /* buttons, badges */
+  --tracking-lg: 0.06em; /* nav links */
+  --tracking-xl: 0.08em; /* dev switcher */
+  --tracking-2xl: 0.12em; /* preview labels */
+
+  /* ─── BORDER RADIUS ───────────────────────────────────────── */
+  --radius-sm: 6px; /* logo dot, small badges */
+  --radius-md: 9px; /* buttons, todo items */
+  --radius-lg: 10px; /* inputs, primary buttons */
+  --radius-xl: 11px; /* google button */
+  --radius-2xl: 14px; /* cards, columns */
+  --radius-3xl: 20px; /* auth card */
+  --radius-pill: 9999px; /* fab, user pill */
+
+  /* ─── SHADOWS ─────────────────────────────────────────────── */
+  --shadow-accent-glow: 0 4px 20px rgba(124, 106, 247, 0.25); /* primary buttons */
+  --shadow-accent-glow-lg: 0 6px 32px rgba(124, 106, 247, 0.45); /* button hover */
+  --shadow-input-focus: 0 0 0 3px rgba(124, 106, 247, 0.25); /* input focus ring */
+  --shadow-auth-card:
+    0 0 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.03); /* auth card */
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.25); /* note card hover */
+  --shadow-surface: 0 1px 4px rgba(0, 0, 0, 0.3); /* auth tab active */
+  --shadow-col-dot-purple: 0 0 6px rgba(124, 106, 247, 0.6); /* column indicator */
+  --shadow-col-dot-yellow: 0 0 6px rgba(251, 191, 36, 0.5); /* column indicator */
+  --shadow-col-dot-green: 0 0 6px rgba(52, 211, 153, 0.5); /* column indicator */
+
+  /* ─── SPACING ─────────────────────────────────────────────── */
+  --spacing-4-5: 18px; /* gap between header elements */
+  --spacing-13: 52px; /* fab size */
+  --spacing-15: 60px; /* section gap */
+  --spacing-18: 72px; /* large section gap */
+
+  /* ─── SIZES ───────────────────────────────────────────────── */
+  --width-todo-col: 280px; /* kanban column desktop */
+  --width-todo-col-sm: 260px; /* kanban column mobile */
+  --width-auth-card: 420px; /* auth card desktop */
+  --width-drawer: 260px; /* mobile drawer */
+  --width-fab: 52px; /* floating action button */
+  --width-page-btn: 34px; /* pagination button */
+  --width-avatar-sm: 26px; /* avatar in header pill */
+  --width-avatar-md: 28px; /* avatar in desktop header */
+  --width-avatar-lg: 32px; /* avatar in mobile header */
+  --width-avatar-xl: 36px; /* avatar in drawer */
+  --width-checkbox: 16px; /* todo item checkbox */
+  --width-col-dot: 10px; /* column color indicator */
+  --width-logo-dot-sm: 20px; /* logo dot mobile */
+  --width-logo-dot-md: 22px; /* logo dot desktop */
+  --width-logo-dot-lg: 28px; /* logo dot auth */
+
+  --height-fab: 52px; /* floating action button */
+  --height-page-btn: 34px; /* pagination button */
+  --height-avatar-sm: 26px; /* avatar in header pill */
+  --height-avatar-md: 28px; /* avatar in desktop header */
+  --height-avatar-lg: 32px; /* avatar in mobile header */
+  --height-avatar-xl: 36px; /* avatar in drawer */
+  --height-checkbox: 16px; /* todo item checkbox */
+  --height-col-dot: 10px; /* column color indicator */
+  --height-app-header: 58px; /* desktop header height */
+  --height-m-header: 54px; /* mobile header height */
+
+  /* ─── ANIMATIONS ──────────────────────────────────────────── */
+  --animate-fade-in: fade-in 0.2s ease-out; /* page/modal entrance */
+  --animate-slide-in-right: slide-in-right 0.3s cubic-bezier(0.32, 0, 0.15, 1); /* drawer */
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite; /* logo dot */
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 10px rgba(124, 106, 247, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(124, 106, 247, 0.6);
+    }
+  }
+}
+
+:root {
+  --background: #0c0c0f;
+  --foreground: #f0f0f5;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+nav {
+  font-family: var(--font-syne);
+}
+
+body,
+input,
+textarea {
+  font-family: var(--font-dm);
+}
