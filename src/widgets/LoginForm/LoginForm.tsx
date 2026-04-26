@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/superbase/client";
+
 import {
   Field,
   FieldError,
@@ -14,12 +15,15 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import GoogleAuthBlock from "../SocialMediaInteraction/GoogleAuth/GoogleAuthBlock";
+import { Button } from "@/components/ui/buttons/DefaultButton";
+import { ErrorsMessage } from "@/components/ui/ErrorsMessage";
+
+import { routeConfig } from "@/lib/constants/routeConfig";
 
 import {
   LoginFormValues,
   loginSchema,
 } from "@/lib/schemes/authScemes/loginScema";
-import { routeConfig } from "@/lib/constants/routeConfig";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -27,7 +31,8 @@ export default function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    setError,
+    formState: { errors, isValid, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     mode: "onTouched",
@@ -37,7 +42,18 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = (data: LoginFormValues) => {
+  const onSubmit = async (formData: LoginFormValues) => {
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithPassword({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (error) {
+      setError("root", { message: error.message });
+      return;
+    }
+
     router.push(`/${routeConfig.home}`);
   };
 
@@ -70,12 +86,14 @@ export default function LoginForm() {
         </FieldGroup>
       </FieldSet>
 
+      {errors.root && <ErrorsMessage message={errors.root.message} />}
+
       <Button
         variant="primary"
         size="lg"
         className="w-full"
         type="submit"
-        disabled={!isValid}
+        disabled={!isValid || isSubmitting}
       >
         Sign In
       </Button>

@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { passwordSchema } from "../passwordSchema";
+import { loginPasswordSchema } from "../passwordSchema";
 
 export const loginSchema = z.object({
   email: z.email(),
-  password: passwordSchema,
+  password: loginPasswordSchema,
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;

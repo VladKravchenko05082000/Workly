@@ -6,10 +6,18 @@ export const passwordRules = [
   { label: "One uppercase letter (A–Z)", test: (p: string) => /[A-Z]/.test(p) },
   { label: "One lowercase letter (a–z)", test: (p: string) => /[a-z]/.test(p) },
   { label: "One digit (0–9)", test: (p: string) => /[0-9]/.test(p) },
-  { label: "One special character (!@#$%^&*)", test: (p: string) => /[!@#$%^&*]/.test(p) },
+  {
+    label: "One special character (!@#$%^&*)",
+    test: (p: string) => /[!@#$%^&*]/.test(p),
+  },
 ];
 
-export const passwordSchema = z
+export const loginPasswordSchema = z
+  .string()
+  .min(8, { message: passwordRules[0].label })
+  .max(20, { message: passwordRules[1].label });
+
+export const signUpPasswordSchema = z
   .string()
   .min(8, { message: passwordRules[0].label })
   .max(20, { message: passwordRules[1].label })

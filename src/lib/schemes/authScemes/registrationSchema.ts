@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { passwordSchema } from "../passwordSchema";
+import { signUpPasswordSchema } from "../passwordSchema";
 
 export const registrationSchema = z
   .object({
     email: z.email(),
-    password: passwordSchema,
+    password: signUpPasswordSchema,
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {

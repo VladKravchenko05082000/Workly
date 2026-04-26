@@ -12,6 +12,8 @@
     "@hookform/resolvers": "^5.2.2",
     "@next/env": "^16.2.4",
     "@reduxjs/toolkit": "^2.11.2",
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.104.1",
     "class-variance-authority": "^0.7.1",
     "client-only": "^0.0.1",
     "clsx": "^2.1.1",

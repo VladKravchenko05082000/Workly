@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/superbase/client";
+
 import {
   Field,
   FieldError,
@@ -14,12 +15,15 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import GoogleAuthBlock from "../SocialMediaInteraction/GoogleAuth/GoogleAuthBlock";
+import { Button } from "@/components/ui/buttons/DefaultButton";
+
+import { routeConfig } from "@/lib/constants/routeConfig";
 
 import {
   RegistrationFormValues,
   registrationSchema,
 } from "@/lib/schemes/authScemes/registrationSchema";
-import { routeConfig } from "@/lib/constants/routeConfig";
+import { ErrorsMessage } from "@/components/ui/ErrorsMessage";
 
 export default function RegistrationForm() {
   const router = useRouter();
@@ -27,7 +31,8 @@ export default function RegistrationForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    setError,
+    formState: { errors, isValid, isSubmitting },
   } = useForm<RegistrationFormValues>({
     resolver: zodResolver(registrationSchema),
     mode: "onTouched",
@@ -38,7 +43,24 @@ export default function RegistrationForm() {
     },
   });
 
-  const onSubmit = (data: RegistrationFormValues) => {
+  const onSubmit = async (formData: RegistrationFormValues) => {
+    const supabase = createClient();
+
+    const { error, data } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (error) {
+      setError("root", { message: error.message });
+      return;
+    }
+
+    if (data.user?.identities?.length === 0) {
+      setError("root", { message: "This email is already registered" });
+      return;
+    }
+
     router.push(`/${routeConfig.home}`);
   };
 
@@ -81,14 +103,16 @@ export default function RegistrationForm() {
         </FieldGroup>
       </FieldSet>
 
+      {errors.root && <ErrorsMessage message={errors.root.message} />}
+
       <Button
         variant="primary"
         size="lg"
         className="w-full"
         type="submit"
-        disabled={!isValid}
+        disabled={!isValid || isSubmitting}
       >
-        Create Account
+        {isSubmitting ? "Proccessing..." : "Create Account"}
       </Button>
 
       <GoogleAuthBlock />
