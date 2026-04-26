@@ -3,6 +3,10 @@ import "./globals.css";
 
 import { syne, dmSans } from "@/lib/fonts";
 import MainProvider from "./_providers/MainProvider";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Workly",
@@ -15,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
+    <html lang="en" className={cn(syne.variable, dmSans.variable, "font-sans", inter.variable)}>
       <body>
         <MainProvider>{children}</MainProvider>
       </body>
