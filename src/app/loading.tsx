@@ -1,3 +1,3 @@
 export default function LoginLoader() {
-  return <div></div>;
+  return <div>Loading</div>;
 }
