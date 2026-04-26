@@ -1,4 +1,4 @@
-import { GoogleAuthIcon } from "@/app/icons/GoogleAuthIcon";
+import { GoogleAuthIcon } from "@/components/icons/GoogleAuthIcon";
 import { Button } from "@/components/ui/button";
 
 export default function GoogleAuthBlock() {
