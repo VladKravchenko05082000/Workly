@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { createClient } from "@/lib/superbase/client";
 
@@ -24,9 +25,19 @@ import {
   registrationSchema,
 } from "@/lib/schemes/authScemes/registrationSchema";
 import { ErrorsMessage } from "@/components/ui/ErrorsMessage";
+import { EyeOpenIcon } from "@/components/icons/EyeOpenIcon";
+import { EyeClosedIcon } from "@/components/icons/EyeClosedIcon";
 
 export default function RegistrationForm() {
   const router = useRouter();
+
+  const [showPassword, setShowPassword] = useState<{
+    confirmPassword: boolean;
+    password: boolean;
+  }>({
+    confirmPassword: false,
+    password: false,
+  });
 
   const {
     register,
@@ -85,7 +96,25 @@ export default function RegistrationForm() {
             <Input
               id="password"
               placeholder="Type your password"
-              type="password"
+              type={showPassword.password ? "text" : "password"}
+              endIcon={
+                <button
+                  type="button"
+                  onClick={() =>
+                    setShowPassword((prevState) => ({
+                      ...prevState,
+                      password: !prevState.password,
+                    }))
+                  }
+                  className="flex items-center text-subtle hover:text-foreground transition-colors cursor-pointer"
+                >
+                  {showPassword.password ? (
+                    <EyeOpenIcon size={16} />
+                  ) : (
+                    <EyeClosedIcon size={16} />
+                  )}
+                </button>
+              }
               {...register("password")}
             />
             <FieldError errors={[errors.password]} />
@@ -95,7 +124,25 @@ export default function RegistrationForm() {
             <Input
               id="confirmPassword"
               placeholder="Retype your password"
-              type="password"
+              type={showPassword.confirmPassword ? "text" : "password"}
+              endIcon={
+                <button
+                  type="button"
+                  onClick={() =>
+                    setShowPassword((prevState) => ({
+                      ...prevState,
+                      confirmPassword: !prevState.confirmPassword,
+                    }))
+                  }
+                  className="flex items-center text-subtle hover:text-foreground transition-colors cursor-pointer"
+                >
+                  {showPassword.confirmPassword ? (
+                    <EyeOpenIcon size={16} />
+                  ) : (
+                    <EyeClosedIcon size={16} />
+                  )}
+                </button>
+              }
               {...register("confirmPassword")}
             />
             <FieldError errors={[errors.confirmPassword]} />

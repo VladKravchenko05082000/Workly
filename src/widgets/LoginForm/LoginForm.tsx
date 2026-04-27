@@ -1,10 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
 import { createClient } from "@/lib/superbase/client";
+
+import { EyeOpenIcon } from "@/components/icons/EyeOpenIcon";
+import { EyeClosedIcon } from "@/components/icons/EyeClosedIcon";
 
 import {
   Field,
@@ -27,6 +31,8 @@ import {
 
 export default function LoginForm() {
   const router = useRouter();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -77,8 +83,21 @@ export default function LoginForm() {
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input
               id="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Type your password"
+              endIcon={
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
+                  className="flex items-center text-subtle hover:text-foreground transition-colors cursor-pointer"
+                >
+                  {showPassword ? (
+                    <EyeOpenIcon size={16} />
+                  ) : (
+                    <EyeClosedIcon size={16} />
+                  )}
+                </button>
+              }
               {...register("password")}
             />
             <FieldError errors={[errors.password]} />
